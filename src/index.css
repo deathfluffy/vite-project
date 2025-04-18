@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "./css/fonts.css";
+
+@theme {
+  --color-primary: #121417;
+  --color-secondary: #85AA9F;
+  --color-grey-background: rgba(133, 170, 159, 0.10);
+  --color-grey-text: rgba(18, 20, 23, 0.80);
+  --color-grey-border: rgba(18, 20, 23, 0.10);
+  --color-white-hover: #A5C0B8;
+}
+
+  body {
+    font-family: 'MacPaw Fixel Display', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    height: 100%;
+  }
