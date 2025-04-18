@@ -1,7 +1,9 @@
+import Recommend from "../components/Recommend/Recommend";
+
 function RecommendPage() {
   return (
     <div>
-      {/* Your recommend page content */}
+      <Recommend />
     </div>
   );
 }

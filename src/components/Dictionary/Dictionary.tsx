@@ -1,8 +1,6 @@
 function Dictionary() {
   return (
-    <div>
-      <h1>Dictionary</h1>
-    </div>
+      <h1>WORK</h1>
   );
 }
 export default Dictionary;

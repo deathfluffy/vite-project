@@ -1,8 +1,10 @@
+import Training from "../components/Training/Training";
+
 function TrainingPage() {
   return (
-    <div>
-      {/* Your training page content */}
-    </div>
+    <>
+     <Training/>
+    </>
   );
 }
 export default TrainingPage;

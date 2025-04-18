@@ -2,26 +2,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../redux/slices/authSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim() || !name.trim()) {
-      alert("Please fill in all fields.");
-      return;
+      toast.info("Please fill in all fields.");
+      return null;
     }
 
   try {
     const resultAction = await dispatch(register({ email, password, name }));
     if (register.fulfilled.match(resultAction)) {
-      alert("Registration successful! You have to check email to verify your account.");
-      navigate("/verify");
+      toast.success("Registration successful! You have to check email to verify your account.");
+      navigate("/login");
     }  
     } catch (e: string | unknown) {
       alert(e || "Registration failed");
@@ -77,7 +79,7 @@ export const Register = () => {
           </div>
           <div className="mb-[32px] relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} 
               name="password"
               autoComplete="new-password"
               onChange={(e) => setPassword(e.target.value)}
@@ -85,12 +87,14 @@ export const Register = () => {
               className="rounded-2xl relative block w-full pt-[16px] pb-[16px] pl-[18px] border-grey-border border outline-none focus:ring-0 focus:border-secondary hover:border-secondary transition-colors"
               placeholder="Password"
             />
-            <button
+         <button
               type="button"
               className="absolute right-[18px] top-1/2 transform -translate-y-1/2"
+              onClick={() => setShowPassword((prev) => !prev)} 
+              tabIndex={-1}
             >
-              <svg width="20" height="20">
-                <use href="/icons/icons.svg#icon-eye"></use>
+              <svg width="20" height="20" className="stroke-[#121417] fill-transparent">
+                <use href={`/src/icons/icons.svg#icon-eye${showPassword ? "-off" : ""}`}></use>
               </svg>
             </button>
           </div>

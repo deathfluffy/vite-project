@@ -2,24 +2,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../../redux/slices/authSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+  const [showPassword, setShowPassword] = useState(false); 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
-      alert("Please fill in all fields.");
-      return;
+      toast.info("Please fill in all fields.");
+      return null;
     }  
 
     try {
     const resultAction = await dispatch(login({ email, password }));    
     if (login.fulfilled.match(resultAction)) {
-      navigate('/dashboard');
+      toast.success("Successful login!");
+      navigate('/dictionary');
     } 
     } catch (e: string | unknown) {
       console.error('Login failed:', e);
@@ -79,9 +82,9 @@ export const Login = () => {
             </div>
             <div className="mb-[32px] relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} 
               name="password"
-              autoComplete="new-password"
+              autoComplete="password"
               onChange={(e) => setPassword(e.target.value)}
               required
               className="rounded-2xl relative block w-full pt-[16px] pb-[16px] pl-[18px] border-grey-border border outline-none focus:ring-0 focus:border-secondary hover:border-secondary transition-colors"
@@ -90,12 +93,15 @@ export const Login = () => {
             <button
               type="button"
               className="absolute right-[18px] top-1/2 transform -translate-y-1/2"
+              onClick={() => setShowPassword((prev) => !prev)} 
+              tabIndex={-1}
             >
-              <svg width="20" height="20">
-                <use href="/icons/icons.svg#icon-eye"></use>
+              <svg width="20" height="20" className="stroke-[#121417] fill-transparent">
+                <use href={`/src/icons/icons.svg#icon-eye${showPassword ? "-off" : ""}`}></use>
               </svg>
             </button>
           </div>
+
             <div>
               <button
                 type="submit"
