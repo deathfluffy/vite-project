@@ -1,0 +1,6 @@
+export const TRANING_PAGE = '/training'
+export const RECOMMEND_PAGE = '/recommend'
+export const DICTIONARY_PAGE = '/dictionary'
+export const HOME_PAGE = '/'
+export const LOGIN_PAGE = '/login'
+export const REGISTER_PAGE = '/register'

@@ -1,0 +1,17 @@
+.ProgressRoot {
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+.ProgressCircle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.ProgressIndicator {
+  transition: stroke-dashoffset 0.6s ease;
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-width: 6;
+  fill: none;
+}

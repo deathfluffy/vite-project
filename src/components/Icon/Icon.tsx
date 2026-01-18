@@ -1,12 +1,11 @@
-import icons from "../../img/icons.svg";
-import css from "./Icon.module.css";
+import icons from "/src/icons/icons.svg"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   id: string;
 }
 
 export const Icon: React.FC<IconProps> = ({ id, ...props }) => (
-  <svg className={css.icon} {...props}>
+  <svg className="stroke-transparent fill-primary" {...props}>
     <use href={`${icons}#${id}`}></use>
   </svg>
 );

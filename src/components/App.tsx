@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy } from "react";
-import { Navbar } from "./NavBar/NavBar";
+import { lazy, Suspense } from "react";
 import ProtectedRoute from "./CustomRoute/CustomRoute";
+import Layout from "./Layout/Layout";
+import Loader from "./Loader/Loader";
 
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const RegisterPage = lazy(() => import("../pages/RegisterPage"));
@@ -12,50 +13,59 @@ const TrainingPage = lazy(() => import("../pages/TrainingPage"));
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/*"
-          element={
-            <>
-              <Navbar />
-              <main className="bg-[#F8F8F8]">
-                <Routes>
-                  <Route
-                    path="dictionary"
-                    element={
-                      <ProtectedRoute>
-                        <DictionaryPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="recommend"
-                    element={
-                      <ProtectedRoute>
-                        <RecommendPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="training"
-                    element={
-                      <ProtectedRoute>
-                        <TrainingPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path=""
-                    element={<Navigate to="dictionary" replace />}
-                  />
-                </Routes>
-              </main>
-            </>
-          }
-        />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <Layout>
+                {" "}
+                <LoginPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Layout>
+                {" "}
+                <RegisterPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="dictionary"
+            element={
+              <Layout>
+                <ProtectedRoute>
+                  <DictionaryPage />
+                </ProtectedRoute>
+              </Layout>
+            }
+          />
+          <Route
+            path="recommend"
+            element={
+              <Layout>
+                <ProtectedRoute>
+                  <RecommendPage />
+                </ProtectedRoute>
+              </Layout>
+            }
+          />
+          <Route
+            path="training"
+            element={
+              <Layout>
+                <ProtectedRoute>
+                  <TrainingPage />
+                </ProtectedRoute>
+              </Layout>
+            }
+          />
+          <Route path="" element={<Navigate to="dictionary" replace />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }
